@@ -1,0 +1,52 @@
+给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
+
+请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+
+你可以假设 nums1 和 nums2 不会同时为空。
+
+我自己编写的代码：
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
+    {
+        int i = nums1.size();
+        int j = nums2.size();
+        int s = i+j;
+        int k = 0;
+        int i1,j1 = 0;
+        
+        vector<int> sum(s);
+        for(int n = 0;n<=s;n++)
+        {
+            if(nums1[i1]>=nums2[j1])
+            {
+                sum[n] = nums2[j1];
+                j1++;
+            }
+            else
+            {
+                sum[n] = nums1[i1];
+                i1++;
+            }
+        }
+        if(s%2 == 1)
+            return sum[s/2];
+        else
+            return (sum[s/2-1]+sum[s/2])/2;
+    }
+};
+
+又是出了点问题，看了一个python的答案，里面直接用了一个sort排序的函数，这也太作弊了吧
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        a = len(nums1) + len(nums2)
+        ls = sorted(nums1+nums2)
+        if a%2 == 0:
+            return (ls[a/2-1]+ls[a/2])/2.0
+        else:
+            return ls[a//2] 
